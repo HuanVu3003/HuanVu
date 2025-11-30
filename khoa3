@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Photo Gallery</title>
+  <style>
+    .thumbnail {
+      width: 100px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    #largeImage {
+      width: 400px;
+      height: 300px;
+      border: 1px solid #ccc;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="gallery">
+    <img class="thumbnail" src="img1.jpg" alt="Ảnh 1">
+    <img class="thumbnail" src="img2.jpg" alt="Ảnh 2">
+    <img class="thumbnail" src="img3.jpg" alt="Ảnh 3">
+    <img class="thumbnail" src="img4.jpg" alt="Ảnh 4">
+    <img class="thumbnail" src="img5.jpg" alt="Ảnh 5">
+    <img class="thumbnail" src="img6.jpg" alt="Ảnh 6">
+  </div>
+  <div id="largeImage" tabindex="0">
+    <p id="largeAlt">Hình ảnh lớn sẽ hiển thị ở đây</p>
+  </div>
+  <script>
+    function initGallery() {
+      const thumbs = document.querySelectorAll('#gallery .thumbnail');
+      const large = document.getElementById('largeImage');
+      const largeAlt = document.getElementById('largeAlt');
+
+      for (let i = 0; i < thumbs.length; i++) {
+        const img = thumbs[i];
+        img.tabIndex = 0;
+        img.addEventListener('mouseover', () => {
+          console.log('mouseover', img.alt);
+          large.style.backgroundImage = `url(${img.src})`;
+          largeAlt.textContent = img.alt;
+        });
+        img.addEventListener('mouseleave', () => {
+          console.log('mouseleave', img.alt);
+          large.style.backgroundImage = '';
+          largeAlt.textContent = 'Hình ảnh lớn sẽ hiển thị ở đây';
+        });
+        img.addEventListener('focus', () => {
+          console.log('focus', img.alt);
+          large.style.backgroundImage = `url(${img.src})`;
+          largeAlt.textContent = img.alt;
+        });
+        img.addEventListener('blur', () => {
+          console.log('blur', img.alt);
+          large.style.backgroundImage = '';
+          largeAlt.textContent = 'Hình ảnh lớn sẽ hiển thị ở đây';
+        });
+      }
+    }
+
+    window.addEventListener('load', initGallery);
+  </script>
+</body>
+</html>
